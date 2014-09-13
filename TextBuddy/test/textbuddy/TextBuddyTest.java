@@ -49,7 +49,7 @@ public class TextBuddyTest {
         TextBuddy.performCommand("add kiwi");
         TextBuddy.performCommand("add mango");
         testOneCommand("sorting according to alphabetical order", "List sorted!\n\n", "sort");
-        //testOneCommand("sorting according to alphabetical order", "1. apple\n2. banana\n3. durian\n4. kiwi\n5. lemon\n6. mango\n7. orange\n8. pear\n\n", "display");
+        testOneCommand("displaying after sorting", "1. apple\n2. banana\n3. durian\n4. kiwi\n5. lemon\n6. mango\n7. orange\n8. pear\n\n", "display");
     }
 
     private void testOneCommand(String description, String expected, String command) {
