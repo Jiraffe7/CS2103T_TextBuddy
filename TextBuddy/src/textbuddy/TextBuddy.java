@@ -1,4 +1,3 @@
-
 package textbuddy;
 
 import java.io.BufferedReader;
@@ -27,7 +26,7 @@ public class TextBuddy {
 
     enum COMMAND_TYPE {
 
-        ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID
+        ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID, SORT
     };
 
     private static final String MESSAGE_WELCOME = "\nWelcome to TextBuddy. %s is ready for use.\n\n";
@@ -96,6 +95,8 @@ public class TextBuddy {
             case EXIT:
                 System.exit(0);
                 break;
+            case SORT:
+                return "List sorted!\n\n";
             case INVALID:
                 return MESSAGE_NO_COMMAND;
             default:
@@ -256,6 +257,8 @@ public class TextBuddy {
             return COMMAND_TYPE.DISPLAY;
         } else if (commands[INPUT_COMMAND].equalsIgnoreCase("exit")) {
             return COMMAND_TYPE.EXIT;
+        } else if (commands[INPUT_COMMAND].equalsIgnoreCase("sort")) {
+            return COMMAND_TYPE.SORT;
         } else {
             return COMMAND_TYPE.INVALID;
         }
