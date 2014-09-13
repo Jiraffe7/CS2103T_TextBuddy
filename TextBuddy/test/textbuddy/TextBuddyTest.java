@@ -44,6 +44,6 @@ public class TextBuddyTest {
     }
 
     private void testOneCommand(String description, String expected, String command) {
-        Assert.assertEquals(description, expected, TextBuddy.determineCommand(command));
+        Assert.assertEquals(description, expected, TextBuddy.performCommand(command));
     }
 }

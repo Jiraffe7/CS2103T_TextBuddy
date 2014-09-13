@@ -1,9 +1,3 @@
-/**
- * TextBuddy by Jireh Tan
- *
- * This program stores text in a list and allows users to manage the list.
- *
- */
 package textbuddy;
 
 import java.io.BufferedReader;
@@ -18,12 +12,22 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This program stores text in a list and allows users to manage the list.
+ *
+ * @author Jireh Tan
+ */
 public class TextBuddy {
 
     private static Scanner sc = new Scanner(System.in);
 
     private static String fileName;
     private static ArrayList<String> tempStore = new ArrayList<>();
+
+    enum COMMAND_TYPE {
+
+        ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID
+    };
 
     public static void main(String[] args) {
 
@@ -39,7 +43,7 @@ public class TextBuddy {
 
         while (true) {
             System.out.println("Command: ");
-            System.out.println(determineCommand(sc.nextLine()));
+            System.out.println(performCommand(sc.nextLine()));
             fileWrite(fileName, tempStore);
         }
     }
@@ -56,19 +60,19 @@ public class TextBuddy {
     }
 
     // Determines the command input by user and executes the command.
-    public static String determineCommand(String line) {
+    public static String performCommand(String line) {
         String[] commands;
 
         if (line.length() > 0) {
-            commands = line.trim().split("\\s+", 2);
+            commands = splitCommandAndArguments(line);
         } else {
             return "No command entered! Enter a command!\n\n";
         }
 
-        String command = commands[0];
+        COMMAND_TYPE command = getCommand(commands);
 
         switch (command) {
-            case "add":
+            case ADD:
                 if (commands.length > 1) {
                     String inputString = commands[1];
                     tempStore.add(inputString);
@@ -76,7 +80,7 @@ public class TextBuddy {
                 } else {
                     return "No input!\n\n";
                 }
-            case "delete":
+            case DELETE:
                 int index;
 
                 if (commands.length > 1) {
@@ -93,10 +97,10 @@ public class TextBuddy {
                 } else {
                     return "Item does not exist!\n\n";
                 }
-            case "clear":
+            case CLEAR:
                 tempStore.clear();
                 return String.format("All items deleted from %s.\n\n", fileName);
-            case "display":
+            case DISPLAY:
                 if (tempStore.isEmpty()) {
                     return String.format("%s is empty.\n\n", fileName);
                 } else {
@@ -107,7 +111,7 @@ public class TextBuddy {
                     displayString = displayString.concat("\n");
                     return displayString;
                 }
-            case "exit":
+            case EXIT:
                 fileWrite(fileName, tempStore);
                 System.exit(0);
                 break;
@@ -115,6 +119,29 @@ public class TextBuddy {
                 return "No command entered! Enter a command!\n\n";
         }
         return null;
+    }
+
+    private static COMMAND_TYPE getCommand(String[] commands) {
+
+        if (commands[0].equalsIgnoreCase("add")) {
+            return COMMAND_TYPE.ADD;
+        } else if (commands[0].equalsIgnoreCase("delete")) {
+            return COMMAND_TYPE.DELETE;
+        } else if (commands[0].equalsIgnoreCase("clear")) {
+            return COMMAND_TYPE.CLEAR;
+        } else if (commands[0].equalsIgnoreCase("display")) {
+            return COMMAND_TYPE.DISPLAY;
+        } else if (commands[0].equalsIgnoreCase("exit")) {
+            return COMMAND_TYPE.EXIT;
+        } else {
+            return COMMAND_TYPE.INVALID;
+        }
+    }
+
+    private static String[] splitCommandAndArguments(String line) {
+        String[] commands;
+        commands = line.trim().split("\\s+", 2);
+        return commands;
     }
 
     // Saves items in list into specified file.
