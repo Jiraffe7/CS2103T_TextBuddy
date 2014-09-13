@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -96,13 +97,18 @@ public class TextBuddy {
                 System.exit(0);
                 break;
             case SORT:
-                return "List sorted!\n\n";
+                return sortAlphaText();
             case INVALID:
                 return MESSAGE_NO_COMMAND;
             default:
                 return MESSAGE_NO_COMMAND;
         }
         return null;
+    }
+
+    private static String sortAlphaText() {
+        Collections.sort(tempStore);
+        return "List sorted!\n\n";
     }
 
     /**

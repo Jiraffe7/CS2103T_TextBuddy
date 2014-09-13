@@ -1,4 +1,3 @@
-
 package textbuddy;
 
 import org.junit.Assert;
@@ -6,7 +5,7 @@ import org.junit.Test;
 
 /**
  * jUnit test for TextBuddy
- * 
+ *
  * @author Jireh
  */
 public class TextBuddyTest {
@@ -38,7 +37,7 @@ public class TextBuddyTest {
         //testing clear function
         testOneCommand("clear items", "All items deleted from null.\n\n", "clear");
         testOneCommand("displaying after clear", "null is empty.\n\n", "display");
-        
+
         //testing sort function
         TextBuddy.performCommand("add lemon");
         TextBuddy.performCommand("add durian");
