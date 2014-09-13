@@ -1,24 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package textbuddy;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- *
+ * jUnit test for TextBuddy
+ * 
  * @author Jireh
  */
 public class TextBuddyTest {
 
     /**
-     * Test of determineCommand method, of class TextBuddy.
+     * Test of performCommand method, of class TextBuddy.
      */
     @Test
-    public void testDetermineCommands() {
+    public void testPerformCommands() {
 
         testOneCommand("no command input", "No command entered! Enter a command!\n\n", "");
 
@@ -37,10 +34,22 @@ public class TextBuddyTest {
         testOneCommand("delete item", "Deleted from null: \"test 3 this is the final test\".\n\n", "delete 4");
         testOneCommand("delete item that does not exist", "Item does not exist!\n\n", "delete 4");
         testOneCommand("displaying after deletion", "1. test\n2. test 1 adding more text\n3. test 2 adding even more text\n\n", "display");
-        
+
         //testing clear function
         testOneCommand("clear items", "All items deleted from null.\n\n", "clear");
         testOneCommand("displaying after clear", "null is empty.\n\n", "display");
+        
+        //testing sort function
+        TextBuddy.performCommand("add lemon");
+        TextBuddy.performCommand("add durian");
+        TextBuddy.performCommand("add banana");
+        TextBuddy.performCommand("add apple");
+        TextBuddy.performCommand("add orange");
+        TextBuddy.performCommand("add pear");
+        TextBuddy.performCommand("add kiwi");
+        TextBuddy.performCommand("add mango");
+        testOneCommand("sorting according to alphabetical order", "List sorted!\n\n", "sort");
+        //testOneCommand("sorting according to alphabetical order", "1. apple\n2. banana\n3. durian\n4. kiwi\n5. lemon\n6. mango\n7. orange\n8. pear\n\n", "display");
     }
 
     private void testOneCommand(String description, String expected, String command) {

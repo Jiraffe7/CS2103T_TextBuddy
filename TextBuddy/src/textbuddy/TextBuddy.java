@@ -1,3 +1,4 @@
+
 package textbuddy;
 
 import java.io.BufferedReader;
