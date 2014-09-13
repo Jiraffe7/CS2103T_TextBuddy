@@ -37,14 +37,14 @@ public class TextBuddy {
             System.out.println("No file specified!");
             return;
         }
-        fileOpen(fileName);
-        fileRead(fileName, tempStore);
+        fileOpen();
+        fileRead();
         printIntroduction();
 
         while (true) {
             System.out.println("Command: ");
             System.out.println(performCommand(sc.nextLine()));
-            fileWrite(fileName, tempStore);
+            fileWrite();
         }
     }
 
@@ -112,7 +112,7 @@ public class TextBuddy {
                     return displayString;
                 }
             case EXIT:
-                fileWrite(fileName, tempStore);
+                fileWrite();
                 System.exit(0);
                 break;
             default:
@@ -145,7 +145,7 @@ public class TextBuddy {
     }
 
     // Saves items in list into specified file.
-    private static void fileWrite(String fileName, ArrayList<String> tempStore) {
+    private static void fileWrite() {
         BufferedWriter writer = null;
 
         try {
@@ -170,7 +170,7 @@ public class TextBuddy {
     }
 
     // Determines if file name is valid, then creates file if it does not exist.
-    private static void fileOpen(String fileName) {
+    private static void fileOpen() {
         File f;
         Path currentDir = Paths.get(fileName);
         String currentDirString = currentDir.toAbsolutePath().toString();
@@ -189,7 +189,7 @@ public class TextBuddy {
     }
 
     // Copies text from file into list.
-    private static void fileRead(String fileName, ArrayList<String> tempStore) {
+    private static void fileRead() {
         BufferedReader reader = null;
 
         try {
