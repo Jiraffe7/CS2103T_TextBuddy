@@ -50,11 +50,11 @@ public class TextBuddy {
 
     // Determines the command input by user and executes the command.
     public static String determineCommand(String line) {
-        String command = line.trim().split("\\s{1}")[0];
+        String command = line.trim().split("\\s+")[0];
         
         switch (command) {
             case "add":
-                String inputString = line.trim().split("\\s{1}")[1];
+                String inputString = line.trim().split("\\s+",2)[1];
                 if (inputString.length() > 0) {
                     tempStore.add(inputString);
                     return String.format("Added to %s: \"%s\".\n\n", fileName, tempStore.get(tempStore.size() - 1));

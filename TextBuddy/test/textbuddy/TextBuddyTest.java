@@ -20,10 +20,10 @@ public class TextBuddyTest {
     @Test
     public void testDetermineCommands() {
         testOneCommand("adding text", "Added to null: \"test\".\n\n", "add test");
-        testOneCommand("adding text", "Added to null: \"1\".\n\n", "add 1");
-        testOneCommand("adding text", "Added to null: \"2\".\n\n", "add 2");
-        testOneCommand("adding text", "Added to null: \"3\".\n\n", "add 3");
-        testOneCommand("displaying", "1. test\n2. 1\n3. 2\n4. 3\n\n", "display");
+        testOneCommand("adding text", "Added to null: \"test 1 adding more text\".\n\n", "add test 1 adding more text");
+        testOneCommand("adding text", "Added to null: \"test 2 adding even more text\".\n\n", "add test 2 adding even more text");
+        testOneCommand("adding text", "Added to null: \"test 3 this is the final test\".\n\n", "add test 3 this is the final test");
+        testOneCommand("displaying", "1. test\n2. test 1 adding more text\n3. test 2 adding even more text\n4. test 3 this is the final test\n\n", "display");
     }
 
     private void testOneCommand(String description, String expected, String command) {
