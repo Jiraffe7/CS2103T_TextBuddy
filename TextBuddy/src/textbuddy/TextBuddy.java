@@ -41,8 +41,8 @@ public class TextBuddy {
     private static final String MESSAGE_ENTER_INDEX = "Enter index!\n\n";
     private static final String MESSAGE_INVALID_INDEX = "Enter integer index!\n\n";
     private static final String MESSAGE_CLEAR_ALL = "All items deleted from %s.\n\n";
-    private static final String MESSAGE_FOUND = "Text found:\n\n";
-    private static final String MESSAGE_NOT_FOUND = "Text not found.\n\n";
+    private static final String MESSAGE_FOUND = "\nText found:\n";
+    private static final String MESSAGE_NOT_FOUND = "\nText not found.\n\n";
 
     /**
      * These are the locations of command and command argument
@@ -325,7 +325,8 @@ public class TextBuddy {
         System.out.printf("%-10s : %s", "delete #", "removes item specified by # from list.\n");
         System.out.printf("%-10s : %s", "clear", "removes all items from list.\n");
         System.out.printf("%-10s : %s", "display", "displays all items in list.\n");
-        System.out.printf("%-10s : %s", "save", "saves all items to list.\n");
+        System.out.printf("%-10s : %s", "sort", "sorts all items in list.\n");
+        System.out.printf("%-10s : %s", "search", "searches for all occurences in list.\n");
         System.out.printf("%-10s : %s", "exit", "saves and exits TextBuddy.\n");
         System.out.println();
     }
