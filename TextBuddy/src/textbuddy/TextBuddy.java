@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -110,18 +111,38 @@ public class TextBuddy {
         return null;
     }
 
+    /**
+     * Searches for given text.
+     *
+     * @param commands
+     *
+     * @return
+     * list of text with full or partial hits with corresponding index in list.
+     */
     private static String searchText(String[] commands) {
-        int index = tempStore.indexOf(commands[1]);
-        if (index >= 0) {
-            String displayString = MESSAGE_FOUND;
-            displayString = displayString.concat(String.format("%d. %s\n", index + 1, tempStore.get(index)));
-            displayString = displayString.concat("\n");
-            return displayString;
+        String searchTerm = commands[1];
+        Iterator<String> iterator = tempStore.iterator();
+        int index = 0;
+        String foundString = "";
+
+        while (iterator.hasNext()) {
+            String currentString = iterator.next();
+            if (currentString.contains(searchTerm)) {
+                foundString = foundString.concat(String.format("%d. %s\n", index + 1, currentString));
+            }
+            index++;
+        }
+
+        if (!foundString.isEmpty()) {
+            return MESSAGE_FOUND.concat(foundString).concat("\n");
         } else {
             return MESSAGE_NOT_FOUND;
         }
     }
 
+    /**
+     * Sorts the list of text alphabetically.
+     */
     private static String sortAlphaText() {
         if (!tempStore.isEmpty()) {
             Collections.sort(tempStore);
