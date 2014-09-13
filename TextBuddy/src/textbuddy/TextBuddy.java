@@ -50,19 +50,37 @@ public class TextBuddy {
 
     // Determines the command input by user and executes the command.
     public static String determineCommand(String line) {
-        String command = line.trim().split("\\s+")[0];
-        
+        String[] commands;
+
+        if (line.length() > 0) {
+            commands = line.trim().split("\\s+", 2);
+        } else {
+            return "No command entered! Enter a command!\n\n";
+        }
+
+        String command = commands[0];
+
         switch (command) {
             case "add":
-                String inputString = line.trim().split("\\s+",2)[1];
-                if (inputString.length() > 0) {
+                if (commands.length > 1) {
+                    String inputString = commands[1];
                     tempStore.add(inputString);
                     return String.format("Added to %s: \"%s\".\n\n", fileName, tempStore.get(tempStore.size() - 1));
                 } else {
                     return "No input!\n\n";
                 }
             case "delete":
-                int index = sc.nextInt() - 1;
+                int index;
+
+                if (commands.length > 1) {
+                    try {
+                        index = Integer.parseInt(commands[1]) - 1;
+                    } catch (NumberFormatException ex) {
+                        return "Enter integer index!\n\n";
+                    }
+                } else {
+                    return "Enter index!\n\n";
+                }
                 if (index >= 0 && index < tempStore.size()) {
                     return String.format("Deleted from %s: \"%s\".\n\n", fileName, tempStore.remove(index));
                 } else {
@@ -70,7 +88,7 @@ public class TextBuddy {
                 }
             case "clear":
                 tempStore.clear();
-                return String.format("All content deleted from %s.\n\n", fileName);
+                return String.format("All items deleted from %s.\n\n", fileName);
             case "display":
                 if (tempStore.isEmpty()) {
                     return String.format("%s is empty.\n\n", fileName);
