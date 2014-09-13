@@ -33,7 +33,8 @@ public class TextBuddy {
         while (true) {
             System.out.println("Command: ");
             String command = sc.next().toLowerCase();
-            determineCommands(command);
+            System.out.println(determineCommands(command));
+            fileWrite(fileName, tempStore);
         }
 
     }
@@ -50,52 +51,47 @@ public class TextBuddy {
     }
 
     // Determines the command input by user and executes the command.
-    public static void determineCommands(String command) {
+    public static String determineCommands(String command) {
         switch (command) {
             case "add":
                 String inputString = sc.nextLine().trim();
                 if (inputString.length() > 0) {
                     tempStore.add(inputString);
-                    System.out.printf("Added to %s: \"%s\".\n\n", fileName, tempStore.get(tempStore.size() - 1));
+                    return String.format("Added to %s: \"%s\".\n\n", fileName, tempStore.get(tempStore.size() - 1));
                 } else {
-                    System.out.printf("No input!\n\n");
+                    return "No input!\n\n";
                 }
-                break;
             case "delete":
                 int index = sc.nextInt() - 1;
                 if (index >= 0 && index < tempStore.size()) {
-                    System.out.printf("Deleted from %s: \"%s\".\n\n", fileName, tempStore.remove(index));
+                    return String.format("Deleted from %s: \"%s\".\n\n", fileName, tempStore.remove(index));
                 } else {
-                    System.out.printf("Item does not exist!\n\n");
+                    return "Item does not exist!\n\n";
                 }
-                break;
             case "clear":
                 tempStore.clear();
-                System.out.printf("All content deleted from %s.\n\n", fileName);
-                break;
+                return String.format("All content deleted from %s.\n\n", fileName);
             case "display":
                 if (tempStore.isEmpty()) {
-                    System.out.println(fileName + " is empty.");
-                    System.out.println();
+                    return String.format("%s is empty.\n\n", fileName);
                 } else {
+                    String displayString = "";
                     for (int i = 1; i < tempStore.size() + 1; i++) {
-                        System.out.printf("%d. %s\n", i, tempStore.get(i - 1));
+                        displayString = displayString.concat(String.format("%d. %s\n", i, tempStore.get(i - 1)));
                     }
-                    System.out.println();
+                    displayString = displayString.concat("\n");
+                    return displayString;
                 }
-                break;
             case "save":
-                System.out.printf("%s saved.", fileName);
-                break;
+                return String.format("%s saved.", fileName);
             case "exit":
                 fileWrite(fileName, tempStore);
                 System.exit(0);
                 break;
             default:
-                System.out.printf("No command entered! Enter a command!\n\n");
+                return "No command entered! Enter a command!\n\n";
         }
-        fileWrite(fileName, tempStore);
-
+        return null;
     }
 
     // Saves items in list into specified file.
