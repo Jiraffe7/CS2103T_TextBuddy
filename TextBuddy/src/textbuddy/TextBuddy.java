@@ -32,12 +32,12 @@ public class TextBuddy {
 
     private static void introduction() {
         System.out.println("List of commands:");
-        System.out.println("add : adds text to list.");
-        System.out.println("delete # : removes item specified by # from list.");
-        System.out.println("clear : removes all items from list.");
-        System.out.println("display : displays all items in list.");
-        System.out.println("save : saves all items in list.");
-        System.out.println("exit : saves and exits TextBuddy.");
+        System.out.printf("%-10s : %s","add", "adds text to list.\n");
+        System.out.printf("%-10s : %s","delete #", "removes item specified by # from list.\n");
+        System.out.printf("%-10s : %s","clear", "removes all items from list.\n");
+        System.out.printf("%-10s : %s","display", "displays all items in list.\n");
+        System.out.printf("%-10s : %s","save", "saves all items to list.\n");
+        System.out.printf("%-10s : %s","exit", "saves and exits TextBuddy.\n");
         System.out.println();
     }
 
