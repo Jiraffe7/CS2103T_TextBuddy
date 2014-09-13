@@ -101,21 +101,25 @@ public class TextBuddy {
             case SORT:
                 return sortAlphaText();
             case SEARCH:
-                int index = tempStore.indexOf(commands[1]);
-                if (index >= 0) {
-                    String displayString = MESSAGE_FOUND;
-                    displayString = displayString.concat(String.format("%d. %s\n", index + 1, tempStore.get(index)));
-                    displayString = displayString.concat("\n");
-                    return displayString;
-                } else {
-                    return MESSAGE_NOT_FOUND;
-                }
+                return searchText(commands);
             case INVALID:
                 return MESSAGE_NO_COMMAND;
             default:
                 return MESSAGE_NO_COMMAND;
         }
         return null;
+    }
+
+    private static String searchText(String[] commands) {
+        int index = tempStore.indexOf(commands[1]);
+        if (index >= 0) {
+            String displayString = MESSAGE_FOUND;
+            displayString = displayString.concat(String.format("%d. %s\n", index + 1, tempStore.get(index)));
+            displayString = displayString.concat("\n");
+            return displayString;
+        } else {
+            return MESSAGE_NOT_FOUND;
+        }
     }
 
     private static String sortAlphaText() {

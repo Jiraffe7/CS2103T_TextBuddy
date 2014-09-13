@@ -15,7 +15,7 @@ public class TextBuddyTest {
      */
     @Test
     public void testPerformCommands() {
-
+        
         testOneCommand("no command input", "No command entered! Enter a command!\n\n", "");
 
         //testing add function
@@ -53,8 +53,10 @@ public class TextBuddyTest {
 
         //testing search function
         testOneCommand("searching for kiwi", "Text found:\n\n4. kiwi\n\n", "search kiwi");
+        TextBuddy.performCommand("add apple and kiwi juice");
+        testOneCommand("searching for all occurences of kiwi", "Text found:\n\n4. kiwi\n9. apple and kiwi juice\n\n", "search kiwi");
     }
-
+    
     private void testOneCommand(String description, String expected, String command) {
         Assert.assertEquals(description, expected, TextBuddy.performCommand(command));
     }
