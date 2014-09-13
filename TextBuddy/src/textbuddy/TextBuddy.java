@@ -32,11 +32,9 @@ public class TextBuddy {
 
         while (true) {
             System.out.println("Command: ");
-            String command = sc.next().toLowerCase();
-            System.out.println(determineCommands(command));
+            System.out.println(determineCommand(sc.nextLine()));
             fileWrite(fileName, tempStore);
         }
-
     }
 
     private static void printIntroduction() {
@@ -51,10 +49,12 @@ public class TextBuddy {
     }
 
     // Determines the command input by user and executes the command.
-    public static String determineCommands(String command) {
+    public static String determineCommand(String line) {
+        String command = line.trim().split("\\s{1}")[0];
+        
         switch (command) {
             case "add":
-                String inputString = sc.nextLine().trim();
+                String inputString = line.trim().split("\\s{1}")[1];
                 if (inputString.length() > 0) {
                     tempStore.add(inputString);
                     return String.format("Added to %s: \"%s\".\n\n", fileName, tempStore.get(tempStore.size() - 1));
