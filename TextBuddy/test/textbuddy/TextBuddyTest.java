@@ -15,7 +15,7 @@ public class TextBuddyTest {
      */
     @Test
     public void testPerformCommands() {
-
+        
         testOneCommand("no command input", "No command entered! Enter a command!\n\n", "");
 
         //testing add function
@@ -50,8 +50,11 @@ public class TextBuddyTest {
         TextBuddy.performCommand("add mango");
         testOneCommand("sorting according to alphabetical order", "List sorted!\n\n", "sort");
         testOneCommand("displaying after sorting", "1. apple\n2. banana\n3. durian\n4. kiwi\n5. lemon\n6. mango\n7. orange\n8. pear\n\n", "display");
-    }
 
+        //testing search function
+        testOneCommand("searching for kiwi", "Text found:\n\n4. kiwi", "search kiwi");
+    }
+    
     private void testOneCommand(String description, String expected, String command) {
         Assert.assertEquals(description, expected, TextBuddy.performCommand(command));
     }
