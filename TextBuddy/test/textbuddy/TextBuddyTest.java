@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * jUnit test for TextBuddy
+ * JUnit test for TextBuddy
  *
  * @author Jireh
  */
