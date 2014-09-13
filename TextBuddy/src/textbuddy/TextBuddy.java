@@ -19,17 +19,17 @@ import java.util.Scanner;
  * @author Jireh Tan
  */
 public class TextBuddy {
-
+    
     private static Scanner sc = new Scanner(System.in);
-
+    
     private static String fileName;
     private static ArrayList<String> tempStore = new ArrayList<>();
-
+    
     enum COMMAND_TYPE {
-
+        
         ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID, SORT
     };
-
+    
     private static final String MESSAGE_WELCOME = "\nWelcome to TextBuddy. %s is ready for use.\n\n";
     private static final String MESSAGE_DELETE_INVALID = "Item does not exist!\n\n";
     private static final String MESSAGE_DELETE = "Deleted from %s: \"%s\".\n\n";
@@ -47,9 +47,9 @@ public class TextBuddy {
      */
     private static final int INPUT_COMMAND = 0;
     private static final int INPUT_ARGUMENT = 1;
-
+    
     public static void main(String[] args) {
-
+        
         if (args.length > 0) {
             fileName = args[0];
         } else {
@@ -59,7 +59,7 @@ public class TextBuddy {
         openFile();
         readFile();
         printIntroduction();
-
+        
         while (true) {
             System.out.println("Command: ");
             System.out.println(performCommand(sc.nextLine()));
@@ -75,15 +75,15 @@ public class TextBuddy {
      */
     public static String performCommand(String line) {
         String[] commands;
-
+        
         if (line.length() > 0) {
             commands = splitCommandAndArguments(line);
         } else {
             return MESSAGE_NO_COMMAND;
         }
-
+        
         COMMAND_TYPE command = getCommand(commands);
-
+        
         switch (command) {
             case ADD:
                 return addText(commands);
@@ -105,10 +105,14 @@ public class TextBuddy {
         }
         return null;
     }
-
+    
     private static String sortAlphaText() {
-        Collections.sort(tempStore);
-        return "List sorted!\n\n";
+        if (!tempStore.isEmpty()) {
+            Collections.sort(tempStore);
+            return "List sorted!\n\n";
+        } else {
+            return String.format(MESSAGE_EMPTY, fileName);
+        }
     }
 
     /**
@@ -143,7 +147,7 @@ public class TextBuddy {
      */
     private static String deleteText(String[] commands) {
         int index;
-
+        
         if (commands.length > 1) {
             try {
                 index = Integer.parseInt(commands[INPUT_ARGUMENT]) - 1;
@@ -181,7 +185,7 @@ public class TextBuddy {
      */
     private static void writeFile() {
         BufferedWriter writer = null;
-
+        
         try {
             writer = new BufferedWriter(new FileWriter(fileName));
         } catch (IOException ex) {
@@ -210,10 +214,10 @@ public class TextBuddy {
         File f;
         Path currentDir = Paths.get(fileName);
         String currentDirString = currentDir.toAbsolutePath().toString();
-
+        
         f = new File(currentDirString);
         if (f.exists() && !f.isDirectory()) {
-
+            
         } else {
             try {
                 f.createNewFile();
@@ -229,7 +233,7 @@ public class TextBuddy {
      */
     private static void readFile() {
         BufferedReader reader = null;
-
+        
         try {
             reader = new BufferedReader(new FileReader(fileName));
         } catch (FileNotFoundException ex) {
@@ -250,9 +254,9 @@ public class TextBuddy {
             }
         }
     }
-
+    
     private static COMMAND_TYPE getCommand(String[] commands) {
-
+        
         if (commands[INPUT_COMMAND].equalsIgnoreCase("add")) {
             return COMMAND_TYPE.ADD;
         } else if (commands[INPUT_COMMAND].equalsIgnoreCase("delete")) {
@@ -269,13 +273,13 @@ public class TextBuddy {
             return COMMAND_TYPE.INVALID;
         }
     }
-
+    
     private static String[] splitCommandAndArguments(String line) {
         String[] commands;
         commands = line.trim().split("\\s+", 2);
         return commands;
     }
-
+    
     private static void printIntroduction() {
         System.out.println("List of commands:");
         System.out.printf("%-10s : %s", "add", "adds text to list.\n");
