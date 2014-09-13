@@ -36,7 +36,7 @@ public class TextBuddy {
     private static final String MESSAGE_ADD_INVALID = "No input!\n\n";
     private static final String MESSAGE_ADD = "Added to %s: \"%s\".\n\n";
     private static final String MESSAGE_NO_COMMAND = "No command entered! Enter a command!\n\n";
-    private static final String MESSAGE_EMPTY = "%s is empty.\n\n";
+    private static final String MESSAGE_EMPTY = "%s is empty!\n\n";
     private static final String MESSAGE_ENTER_INDEX = "Enter index!\n\n";
     private static final String MESSAGE_INVALID_INDEX = "Enter integer index!\n\n";
     private static final String MESSAGE_CLEAR_ALL = "All items deleted from %s.\n\n";

@@ -36,9 +36,10 @@ public class TextBuddyTest {
 
         //testing clear function
         testOneCommand("clear items", "All items deleted from null.\n\n", "clear");
-        testOneCommand("displaying after clear", "null is empty.\n\n", "display");
+        testOneCommand("displaying after clear", "null is empty!\n\n", "display");
 
         //testing sort function
+        testOneCommand("sorting without items", "null is empty!\n\n", "sort");
         TextBuddy.performCommand("add lemon");
         TextBuddy.performCommand("add durian");
         TextBuddy.performCommand("add banana");
