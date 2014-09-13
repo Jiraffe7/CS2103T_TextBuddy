@@ -82,8 +82,6 @@ public class TextBuddy {
                     displayString = displayString.concat("\n");
                     return displayString;
                 }
-            case "save":
-                return String.format("%s saved.", fileName);
             case "exit":
                 fileWrite(fileName, tempStore);
                 System.exit(0);
