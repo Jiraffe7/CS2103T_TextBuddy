@@ -22,6 +22,8 @@ import java.util.Scanner;
 public class TextBuddy {
 
     private static Scanner sc = new Scanner(System.in);
+    private static BufferedReader reader;
+    private static BufferedWriter writer;
 
     private static String fileName;
     private static ArrayList<String> tempStore = new ArrayList<>();
@@ -218,33 +220,6 @@ public class TextBuddy {
     }
 
     /**
-     * Saves items in list into specified file.
-     */
-    private static void writeFile() {
-        BufferedWriter writer = null;
-
-        try {
-            writer = new BufferedWriter(new FileWriter(fileName));
-        } catch (IOException ex) {
-            System.err.println("IOException: " + ex.getMessage());
-        }
-        try {
-            for (String line : tempStore) {
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException ex) {
-            System.err.println("IOException: " + ex.getMessage());
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException ex) {
-                System.err.println("IOException: " + ex.getMessage());
-            }
-        }
-    }
-
-    /**
      * Determines if file name is valid, then creates file if it does not exist.
      */
     private static void openFile() {
@@ -269,13 +244,8 @@ public class TextBuddy {
      * Copies text from file into list.
      */
     private static void readFile() {
-        BufferedReader reader = null;
+        initialiseBufferedReader();
 
-        try {
-            reader = new BufferedReader(new FileReader(fileName));
-        } catch (FileNotFoundException ex) {
-            System.err.println("FileNotFoundException: " + ex.getMessage());
-        }
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {
@@ -284,11 +254,24 @@ public class TextBuddy {
         } catch (IOException ex) {
             System.err.println("IOException: " + ex.getMessage());
         } finally {
-            try {
-                reader.close();
-            } catch (IOException ex) {
-                System.err.println("IOException: " + ex.getMessage());
+            terminateBufferedReader();
+        }
+    }
+
+    /**
+     * Saves items in list into specified file.
+     */
+    private static void writeFile() {
+        initialiseBufferedWriter();
+        try {
+            for (String line : tempStore) {
+                writer.write(line);
+                writer.newLine();
             }
+        } catch (IOException ex) {
+            System.err.println("IOException: " + ex.getMessage());
+        } finally {
+            terminateBufferedWriter();
         }
     }
 
@@ -317,6 +300,38 @@ public class TextBuddy {
         String[] commands;
         commands = line.trim().split("\\s+", 2);
         return commands;
+    }
+
+    private static void initialiseBufferedWriter() {
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName));
+        } catch (IOException ex) {
+            System.err.println("IOException: " + ex.getMessage());
+        }
+    }
+
+    private static void terminateBufferedWriter() {
+        try {
+            writer.close();
+        } catch (IOException ex) {
+            System.err.println("IOException: " + ex.getMessage());
+        }
+    }
+
+    private static void initialiseBufferedReader() {
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+        } catch (FileNotFoundException ex) {
+            System.err.println("FileNotFoundException: " + ex.getMessage());
+        }
+    }
+
+    private static void terminateBufferedReader() {
+        try {
+            reader.close();
+        } catch (IOException ex) {
+            System.err.println("IOException: " + ex.getMessage());
+        }
     }
 
     private static void printIntroduction() {
