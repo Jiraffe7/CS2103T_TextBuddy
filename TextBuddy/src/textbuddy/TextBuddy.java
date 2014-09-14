@@ -9,9 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -25,33 +22,20 @@ public class TextBuddy {
     private static BufferedReader reader;
     private static BufferedWriter writer;
 
-    private static String fileName;
-    private static ArrayList<String> tempStore = new ArrayList<>();
-
-    enum COMMAND_TYPE {
-
-        ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID, SORT, SEARCH
-    };
-
-    private static final String MESSAGE_WELCOME = "\nWelcome to TextBuddy. %s is ready for use.\n\n";
-    private static final String MESSAGE_DELETE_INVALID = "Item does not exist!\n\n";
-    private static final String MESSAGE_DELETE = "Deleted from %s: \"%s\".\n\n";
-    private static final String MESSAGE_ADD_INVALID = "No input!\n\n";
-    private static final String MESSAGE_ADD = "Added to %s: \"%s\".\n\n";
-    private static final String MESSAGE_NO_COMMAND = "No command entered! Enter a command!\n\n";
-    private static final String MESSAGE_EMPTY = "%s is empty!\n\n";
-    private static final String MESSAGE_ENTER_INDEX = "Enter index!\n\n";
-    private static final String MESSAGE_INVALID_INDEX = "Enter integer index!\n\n";
-    private static final String MESSAGE_CLEAR_ALL = "All items deleted from %s.\n\n";
-    private static final String MESSAGE_FOUND = "\nText found:\n";
-    private static final String MESSAGE_NOT_FOUND = "\nText not found.\n\n";
+    static String fileName;
 
     /**
      * These are the locations of command and command argument
      * stored in the commands[] array.
      */
+    enum COMMAND_TYPE {
+
+        ADD, DELETE, CLEAR, DISPLAY, EXIT, INVALID, SORT, SEARCH
+    };
+
     private static final int INPUT_COMMAND = 0;
-    private static final int INPUT_ARGUMENT = 1;
+    private static final String MESSAGE_WELCOME = "\nWelcome to TextBuddy. %s is ready for use.\n\n";
+    private static final String MESSAGE_NO_COMMAND = "No command entered! Enter a command!\n\n";
 
     public static void main(String[] args) {
 
@@ -91,132 +75,26 @@ public class TextBuddy {
 
         switch (command) {
             case ADD:
-                return addText(commands);
+                return TextBuddyLogic.addText(commands);
             case DELETE:
-                return deleteText(commands);
+                return TextBuddyLogic.deleteText(commands);
             case CLEAR:
-                return clearText();
+                return TextBuddyLogic.clearText();
             case DISPLAY:
-                return displayText();
+                return TextBuddyLogic.displayText();
             case EXIT:
                 System.exit(0);
                 break;
             case SORT:
-                return sortAlphaText();
+                return TextBuddyLogic.sortAlphaText();
             case SEARCH:
-                return searchText(commands);
+                return TextBuddyLogic.searchText(commands);
             case INVALID:
                 return MESSAGE_NO_COMMAND;
             default:
                 return MESSAGE_NO_COMMAND;
         }
         return null;
-    }
-
-    /**
-     * Searches for given text.
-     *
-     * @param commands
-     *
-     * @return
-     * list of text with full or partial hits with corresponding index in list.
-     */
-    private static String searchText(String[] commands) {
-        String searchTerm = commands[1];
-        Iterator<String> iterator = tempStore.iterator();
-        int index = 0;
-        String foundString = "";
-
-        while (iterator.hasNext()) {
-            String currentString = iterator.next();
-            if (currentString.contains(searchTerm)) {
-                foundString = foundString.concat(String.format("%d. %s\n", index + 1, currentString));
-            }
-            index++;
-        }
-
-        if (!foundString.isEmpty()) {
-            return MESSAGE_FOUND.concat(foundString).concat("\n");
-        } else {
-            return MESSAGE_NOT_FOUND;
-        }
-    }
-
-    /**
-     * Sorts the list of text alphabetically.
-     */
-    private static String sortAlphaText() {
-        if (!tempStore.isEmpty()) {
-            Collections.sort(tempStore);
-            return "List sorted!\n\n";
-        } else {
-            return String.format(MESSAGE_EMPTY, fileName);
-        }
-    }
-
-    /**
-     * Displays a list of text stored in the file.
-     */
-    private static String displayText() {
-        if (tempStore.isEmpty()) {
-            return String.format(MESSAGE_EMPTY, fileName);
-        } else {
-            String displayString = "";
-            for (int i = 1; i < tempStore.size() + 1; i++) {
-                displayString = displayString.concat(String.format("%d. %s\n", i, tempStore.get(i - 1)));
-            }
-            displayString = displayString.concat("\n");
-            return displayString;
-        }
-    }
-
-    /**
-     * Clears all text stored in the file.
-     */
-    private static String clearText() {
-        tempStore.clear();
-        return String.format(MESSAGE_CLEAR_ALL, fileName);
-    }
-
-    /**
-     * Deletes text of a given index from the file.
-     *
-     * @param commands
-     * index must be found in commands[1]
-     */
-    private static String deleteText(String[] commands) {
-        int index;
-
-        if (commands.length > 1) {
-            try {
-                index = Integer.parseInt(commands[INPUT_ARGUMENT]) - 1;
-            } catch (NumberFormatException ex) {
-                return MESSAGE_INVALID_INDEX;
-            }
-        } else {
-            return MESSAGE_ENTER_INDEX;
-        }
-        if (index >= 0 && index < tempStore.size()) {
-            return String.format(MESSAGE_DELETE, fileName, tempStore.remove(index));
-        } else {
-            return MESSAGE_DELETE_INVALID;
-        }
-    }
-
-    /**
-     * Adds text to the file.
-     *
-     * @param commands
-     * text to be added must be found in commands[1]
-     */
-    private static String addText(String[] commands) {
-        if (commands.length > 1) {
-            String inputString = commands[INPUT_ARGUMENT];
-            tempStore.add(inputString);
-            return String.format(MESSAGE_ADD, fileName, tempStore.get(tempStore.size() - 1));
-        } else {
-            return MESSAGE_ADD_INVALID;
-        }
     }
 
     /**
@@ -249,7 +127,7 @@ public class TextBuddy {
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {
-                tempStore.add(line);
+                TextBuddyLogic.getTempStore().add(line);
             }
         } catch (IOException ex) {
             System.err.println("IOException: " + ex.getMessage());
@@ -264,7 +142,7 @@ public class TextBuddy {
     private static void writeFile() {
         initialiseBufferedWriter();
         try {
-            for (String line : tempStore) {
+            for (String line : TextBuddyLogic.getTempStore()) {
                 writer.write(line);
                 writer.newLine();
             }
