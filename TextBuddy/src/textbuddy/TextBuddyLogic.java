@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /**
- *
+ * This class contains the text editing methods of TextBuddy.
+ * 
  * @author Jireh
  */
 public class TextBuddyLogic {
