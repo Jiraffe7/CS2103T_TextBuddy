@@ -100,7 +100,7 @@ public class TextBuddy {
     /**
      * Determines if file name is valid, then creates file if it does not exist.
      */
-    private static void openFile() {
+    protected static void openFile() {
         File f;
         Path currentDir = Paths.get(fileName);
         String currentDirString = currentDir.toAbsolutePath().toString();
@@ -121,7 +121,7 @@ public class TextBuddy {
     /**
      * Copies text from file into list.
      */
-    private static void readFile() {
+    protected static void readFile() {
         initialiseBufferedReader();
 
         String line = null;
@@ -139,7 +139,7 @@ public class TextBuddy {
     /**
      * Saves items in list into specified file.
      */
-    private static void writeFile() {
+    protected static void writeFile() {
         initialiseBufferedWriter();
         try {
             for (String line : TextBuddyLogic.getTempStore()) {

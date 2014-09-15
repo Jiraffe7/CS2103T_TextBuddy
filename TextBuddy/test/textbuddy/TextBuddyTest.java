@@ -1,6 +1,8 @@
 package textbuddy;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -20,26 +22,26 @@ public class TextBuddyTest {
 
         //testing add function
         testOneCommand("add command without text", "No input!\n\n", "add");
-        testOneCommand("adding text", "Added to null: \"test\".\n\n", "add test");
-        testOneCommand("adding text", "Added to null: \"test 1 adding more text\".\n\n", "add test 1 adding more text");
-        testOneCommand("adding text", "Added to null: \"test 2 adding even more text\".\n\n", "add test 2 adding even more text");
-        testOneCommand("adding text", "Added to null: \"test 3 this is the final test\".\n\n", "add test 3 this is the final test");
+        testOneCommand("adding text", "Added to test.txt: \"test\".\n\n", "add test");
+        testOneCommand("adding text", "Added to test.txt: \"test 1 adding more text\".\n\n", "add test 1 adding more text");
+        testOneCommand("adding text", "Added to test.txt: \"test 2 adding even more text\".\n\n", "add test 2 adding even more text");
+        testOneCommand("adding text", "Added to test.txt: \"test 3 this is the final test\".\n\n", "add test 3 this is the final test");
         testOneCommand("displaying after adding", "1. test\n2. test 1 adding more text\n3. test 2 adding even more text\n4. test 3 this is the final test\n\n", "display");
 
         //testing delete function
         testOneCommand("delete command with no index", "Enter index!\n\n", "delete");
         testOneCommand("delete command with non integer value input for index", "Enter integer index!\n\n", "delete hello");
         testOneCommand("delete item that does not exist", "Item does not exist!\n\n", "delete 5");
-        testOneCommand("delete item", "Deleted from null: \"test 3 this is the final test\".\n\n", "delete 4");
+        testOneCommand("delete item", "Deleted from test.txt: \"test 3 this is the final test\".\n\n", "delete 4");
         testOneCommand("delete item that does not exist", "Item does not exist!\n\n", "delete 4");
         testOneCommand("displaying after deletion", "1. test\n2. test 1 adding more text\n3. test 2 adding even more text\n\n", "display");
 
         //testing clear function
-        testOneCommand("clear items", "All items deleted from null.\n\n", "clear");
-        testOneCommand("displaying after clear", "null is empty!\n\n", "display");
+        testOneCommand("clear items", "All items deleted from test.txt.\n\n", "clear");
+        testOneCommand("displaying after clear", "test.txt is empty!\n\n", "display");
 
         //testing sort function
-        testOneCommand("sorting without items", "null is empty!\n\n", "sort");
+        testOneCommand("sorting without items", "test.txt is empty!\n\n", "sort");
         TextBuddy.performCommand("add lemon");
         TextBuddy.performCommand("add durian");
         TextBuddy.performCommand("add banana");
@@ -60,5 +62,22 @@ public class TextBuddyTest {
 
     private void testOneCommand(String description, String expected, String command) {
         Assert.assertEquals(description, expected, TextBuddy.performCommand(command));
+    }
+
+    /**
+     * Initialize resources required for this test.
+     */
+    @Before
+    public void setUp() {
+        textbuddy.TextBuddy.fileName = "test.txt";
+        textbuddy.TextBuddy.openFile();
+    }
+
+    /**
+     * Writes to file after test completes.
+     */
+    @After
+    public void tearDown() {
+        textbuddy.TextBuddy.writeFile();
     }
 }
