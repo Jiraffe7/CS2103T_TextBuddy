@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * This program stores text in a list and allows users to manage the list.
  *
- * @author Jireh Tan
+ * @author Jireh Tan hello my name is master change
  */
 public class TextBuddy {
 
